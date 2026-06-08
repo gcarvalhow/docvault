@@ -1,6 +1,6 @@
 # DocVault — Sistema de Gestão e Aprovação de Documentos
 
-> Avaliação N3 — Segurança da Informação · Católica SC · Prof. Edson Vaz Lopes  
+> Avaliação N3 — Segurança da Informação · Católica SC · Prof. Edson Vaz Lopes
 > Projeto **P06-A** — Gestão de Documentos: Envio e Aprovação
 
 ---
@@ -15,23 +15,23 @@ O sistema foi desenvolvido com foco em segurança aplicada: autenticação via J
 
 ## Stack
 
-| Camada     | Tecnologia                          |
-|------------|-------------------------------------|
-| Back-end   | Node.js + Express                   |
-| Banco      | SQLite via `better-sqlite3`         |
-| Auth       | JWT (`jsonwebtoken`) + cookie httpOnly |
-| Senhas     | `bcryptjs` (custo 12)              |
-| Front-end  | HTML + CSS + JS (sem framework)     |
+| Camada    | Tecnologia                             |
+| --------- | -------------------------------------- |
+| Back-end  | Node.js + Express                      |
+| Banco     | SQLite via `better-sqlite3`            |
+| Auth      | JWT (`jsonwebtoken`) + cookie httpOnly |
+| Senhas    | `bcryptjs` (custo 12)                  |
+| Front-end | HTML + CSS + JS (sem framework)        |
 
 ---
 
 ## Perfis de usuário
 
-| Perfil         | Descrição                                                                 |
-|----------------|---------------------------------------------------------------------------|
-| `solicitante`  | Cria e visualiza apenas os próprios documentos                            |
-| `analista`     | Visualiza documentos pendentes e atribuídos, altera status e comenta      |
-| `admin`        | Gerencia usuários, visualiza todos os documentos e acessa logs de auditoria |
+| Perfil        | Descrição                                                                   |
+| ------------- | --------------------------------------------------------------------------- |
+| `solicitante` | Cria e visualiza apenas os próprios documentos                              |
+| `analista`    | Visualiza documentos pendentes e atribuídos, altera status e comenta        |
+| `admin`       | Gerencia usuários, visualiza todos os documentos e acessa logs de auditoria |
 
 ---
 
@@ -44,9 +44,9 @@ O sistema foi desenvolvido com foco em segurança aplicada: autenticação via J
 
 ## Instalação e execução
 
-```bash
+```
 # 1. Clone o repositório
-git clone https://github.com/seu-grupo/docvault.git
+git clone https://github.com/gcarvalhow/docvault.git
 cd docvault
 
 # 2. Instale as dependências
@@ -68,14 +68,14 @@ npm start
 
 ## Usuários de teste (após seed)
 
-| E-mail                        | Senha          | Perfil       |
-|-------------------------------|----------------|--------------|
-| admin@docvault.dev            | Admin@2026!    | admin        |
-| ana.analista@docvault.dev     | Analista@2026! | analista     |
-| bruno.analista@docvault.dev   | Analista@2026! | analista     |
-| carlos@docvault.dev           | Carlos@2026!   | solicitante  |
-| diana@docvault.dev            | Diana@2026!    | solicitante  |
-| eduardo@docvault.dev          | Eduardo@2026!  | solicitante  |
+| E-mail                        | Senha          | Perfil      |
+| ----------------------------- | -------------- | ----------- |
+| admin@docvault.dev            | Admin@2026!    | admin       |
+| ana.analista@docvault.dev     | Analista@2026! | analista    |
+| bruno.analista@docvault.dev   | Analista@2026! | analista    |
+| carlos@docvault.dev           | Carlos@2026!   | solicitante |
+| diana@docvault.dev            | Diana@2026!    | solicitante |
+| eduardo@docvault.dev          | Eduardo@2026!  | solicitante |
 
 > As senhas são armazenadas **exclusivamente como hash bcrypt** no banco de dados. Nunca em texto puro.
 
@@ -111,15 +111,15 @@ docvault/
 
 ## Segurança implementada
 
-| Controle                     | Onde                          | Risco reduzido                              |
-|------------------------------|-------------------------------|---------------------------------------------|
-| Hash de senha (bcrypt, c=12) | `db/seed.js`, `routes/admin`  | Vazamento de senha em texto puro            |
-| JWT httpOnly cookie          | `routes/auth.js`              | XSS roubando token                          |
-| Autorização por perfil (RBAC)| `middleware/auth.js`          | Acesso indevido a rotas restritas           |
-| Regra de dono do recurso     | `routes/documents.js`         | Solicitante acessando dados de outro usuário|
-| Validação no servidor        | Todas as rotas                | Entrada inválida ou maliciosa               |
-| Secrets fora do Git          | `.env` + `.gitignore`         | Vazamento de chaves no repositório          |
-| Logs de auditoria            | `utils/audit.js`              | Falta de rastreabilidade de ações           |
+| Controle                      | Onde                         | Risco reduzido                               |
+| ----------------------------- | ---------------------------- | -------------------------------------------- |
+| Hash de senha (bcrypt, c=12)  | `db/seed.js`, `routes/admin` | Vazamento de senha em texto puro             |
+| JWT httpOnly cookie           | `routes/auth.js`             | XSS roubando token                           |
+| Autorização por perfil (RBAC) | `middleware/auth.js`         | Acesso indevido a rotas restritas            |
+| Regra de dono do recurso      | `routes/documents.js`        | Solicitante acessando dados de outro usuário |
+| Validação no servidor         | Todas as rotas               | Entrada inválida ou maliciosa                |
+| Secrets fora do Git           | `.env` + `.gitignore`        | Vazamento de chaves no repositório           |
+| Logs de auditoria             | `utils/audit.js`             | Falta de rastreabilidade de ações            |
 
 ### Eventos auditados
 
@@ -135,44 +135,47 @@ docvault/
 ## Endpoints da API
 
 ### Autenticação
-| Método | Rota              | Perfil     | Descrição             |
-|--------|-------------------|------------|-----------------------|
-| POST   | /api/auth/login   | público    | Login                 |
-| POST   | /api/auth/logout  | autenticado| Logout                |
-| GET    | /api/auth/me      | autenticado| Dados do usuário atual|
+
+| Método | Rota             | Perfil      | Descrição              |
+| ------ | ---------------- | ----------- | ---------------------- |
+| POST   | /api/auth/login  | público     | Login                  |
+| POST   | /api/auth/logout | autenticado | Logout                 |
+| GET    | /api/auth/me     | autenticado | Dados do usuário atual |
 
 ### Documentos
-| Método | Rota                         | Perfil              | Descrição                              |
-|--------|------------------------------|---------------------|----------------------------------------|
-| GET    | /api/documents               | todos               | Listar (filtrado por perfil)           |
-| GET    | /api/documents/:id           | todos               | Detalhe (com regra de dono)            |
-| POST   | /api/documents               | solicitante, admin  | Criar documento                        |
-| PUT    | /api/documents/:id           | dono (se pendente)  | Editar (apenas pendente)               |
-| PATCH  | /api/documents/:id/status    | analista, admin     | Alterar status                         |
-| DELETE | /api/documents/:id           | dono ou admin       | Excluir                                |
+
+| Método | Rota                      | Perfil             | Descrição                    |
+| ------ | ------------------------- | ------------------ | ---------------------------- |
+| GET    | /api/documents            | todos              | Listar (filtrado por perfil) |
+| GET    | /api/documents/:id        | todos              | Detalhe (com regra de dono)  |
+| POST   | /api/documents            | solicitante, admin | Criar documento              |
+| PUT    | /api/documents/:id        | dono (se pendente) | Editar (apenas pendente)     |
+| PATCH  | /api/documents/:id/status | analista, admin    | Alterar status               |
+| DELETE | /api/documents/:id        | dono ou admin      | Excluir                      |
 
 ### Admin
-| Método | Rota                         | Perfil | Descrição              |
-|--------|------------------------------|--------|------------------------|
-| GET    | /api/admin/users             | admin  | Listar usuários        |
-| POST   | /api/admin/users             | admin  | Criar usuário          |
-| PATCH  | /api/admin/users/:id/toggle  | admin  | Ativar/desativar       |
-| GET    | /api/admin/logs              | admin  | Logs de auditoria      |
+
+| Método | Rota                        | Perfil | Descrição         |
+| ------ | --------------------------- | ------ | ----------------- |
+| GET    | /api/admin/users            | admin  | Listar usuários   |
+| POST   | /api/admin/users            | admin  | Criar usuário     |
+| PATCH  | /api/admin/users/:id/toggle | admin  | Ativar/desativar  |
+| GET    | /api/admin/logs             | admin  | Logs de auditoria |
 
 ---
 
 ## Matriz de permissões
 
-| Funcionalidade            | Solicitante | Analista | Admin |
-|---------------------------|:-----------:|:--------:|:-----:|
-| Criar documento           | ✓           | —        | ✓     |
-| Ver próprios documentos   | ✓           | ✓        | ✓     |
-| Ver todos os documentos   | ✗           | Parcial  | ✓     |
-| Editar documento          | Só próprio (pendente) | ✗ | ✓ |
-| Excluir documento         | Só próprio (pendente) | ✗ | ✓ |
-| Alterar status            | ✗           | ✓        | ✓     |
-| Gerenciar usuários        | ✗           | ✗        | ✓     |
-| Visualizar logs           | ✗           | ✗        | ✓     |
+| Funcionalidade          | Solicitante           | Analista | Admin |
+| ----------------------- | --------------------- | -------- | ----- |
+| Criar documento         | ✓                     | —        | ✓     |
+| Ver próprios documentos | ✓                     | ✓        | ✓     |
+| Ver todos os documentos | ✗                     | Parcial  | ✓     |
+| Editar documento        | Só próprio (pendente) | ✗        | ✓     |
+| Excluir documento       | Só próprio (pendente) | ✗        | ✓     |
+| Alterar status          | ✗                     | ✓        | ✓     |
+| Gerenciar usuários      | ✗                     | ✗        | ✓     |
+| Visualizar logs         | ✗                     | ✗        | ✓     |
 
 ---
 
@@ -188,10 +191,12 @@ docvault/
 
 ## Integrantes do grupo
 
-| Nome | GitHub |
-|------|--------|
-|      |        |
-|      |        |
+| Nome                     | GitHub                                            |
+| ------------------------ | ------------------------------------------------- |
+| Igor Thiago Seberino     | [@igorSeberino](https://github.com/igorSeberino)  |
+| Adrian Cesar Gonçalves   | [@adrian-cesar](https://github.com/adrian-cesar)  |
+| Renato Colin Neto        | [@RenatoColin](https://github.com/RenatoColin)    |
+| Gabriel da Silva Carvalho | [@gabrielcarvallho](https://github.com/gabrielcarvallho) |
 
 ---
 
