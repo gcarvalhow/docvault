@@ -116,6 +116,7 @@ docvault/
 | Hash de senha (bcrypt, c=12)  | `db/seed.js`, `routes/admin` | Vazamento de senha em texto puro             |
 | JWT httpOnly cookie           | `routes/auth.js`             | XSS roubando token                           |
 | Autorização por perfil (RBAC) | `middleware/auth.js`         | Acesso indevido a rotas restritas            |
+| Rate limiting no login        | `routes/auth.js`             | Força bruta de credenciais                   |
 | Regra de dono do recurso      | `routes/documents.js`        | Solicitante acessando dados de outro usuário |
 | Validação no servidor         | Todas as rotas               | Entrada inválida ou maliciosa                |
 | Secrets fora do Git           | `.env` + `.gitignore`        | Vazamento de chaves no repositório           |
@@ -183,7 +184,6 @@ docvault/
 
 - Upload real de arquivo (arquivo é gerado como buffer fictício)
 - HTTPS (requer configuração de certificado no ambiente de produção)
-- Rate limiting no login (recomendado para produção)
 - Refresh token (sessão expira em 8h sem renovação automática)
 - Testes automatizados
 
