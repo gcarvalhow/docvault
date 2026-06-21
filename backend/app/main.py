@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 
 from app.config import settings
-from app.core.errors import _format_validation_errors
+from backend.app.core.shared import _format_validation_errors
 
 app = FastAPI(title="SGG Automation — DOM Med", version="1.0.0")
 

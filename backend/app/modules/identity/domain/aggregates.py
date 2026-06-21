@@ -32,7 +32,6 @@ class User(Model):
         nullable=False,
     )
 
-    created_by: Mapped[str | None] = mapped_column(PG_UUID(as_uuid=False), nullable=True)
     security_stamp: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), default=uuid4, nullable=False)
 
     organization: Mapped["Organization"] = relationship("Organization", lazy="selectin")
@@ -43,6 +42,15 @@ class User(Model):
         kwargs.setdefault("created_at", datetime.now(timezone.utc))
 
         Model.__init__(self, **kwargs)
+
+    @classmethod
+    def Create(cls, email: str, password_hash: str, organization_id: UUID, role: UserRole = UserRole.REQUESTER) -> "User":
+        return cls(
+            email=email,
+            password_hash=password_hash,
+            organization_id=organization_id,
+            role=role
+        )
 
     def deactivate(self) -> None:
         self.revoke_all_refresh_tokens()

@@ -21,3 +21,7 @@ class Organization(Model):
         kwargs.setdefault("created_at", datetime.now(timezone.utc))
 
         Model.__init__(self, **kwargs)
+
+    @classmethod
+    def Create(cls, name: str) -> "Organization":
+        return cls(name=name)
