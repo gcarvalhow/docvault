@@ -73,4 +73,3 @@ Ao finalizar a tarefa:
 ```
 spec define branch/commit/PR → master atualizada → criar branch → commits → push → Pull Request → aguardar revisão → revisor faz o merge
 ```
-
