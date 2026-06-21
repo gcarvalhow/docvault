@@ -1,5 +1,15 @@
 # Funcionalidades - Renato Colin
 
+## 0. Git
+
+- **Branch:** `feature/001-first-access`
+- **Commit:** `feat(identity): create organization and initial admin user on first access`
+- **Pull Request (título):** `feat(identity): first access - organization and admin user creation`
+
+Use exatamente esses valores ao criar a branch, commitar e abrir o PR. Ver `work-guide.md` para o passo a passo.
+
+---
+
 ## 1. Objetivo
 Este documento define o escopo de implementacao do desenvolvedor Renato Colin na fase inicial do projeto.
 
