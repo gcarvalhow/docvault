@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
 from app.modules.identity.domain.aggregates import User
-from app.modules.identity.infrastructure import UserRepository
+from app.modules.identity.infrastructure.repositories import UserRepository
 from app.modules.identity.services import PasswordService, JwtTokenService
 
 class AuthUseCase:

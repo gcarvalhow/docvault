@@ -4,9 +4,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 
 from app.config import settings
-from backend.app.core.shared import _format_validation_errors
+from app.core.shared import _format_validation_errors
 
-app = FastAPI(title="SGG Automation — DOM Med", version="1.0.0")
+from app.modules.identity.router import router as identity_router
+from app.modules.organization.router import router as organization_router
+
+app = FastAPI(title="DocVault", version="1.0.0")
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
@@ -22,6 +25,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(identity_router)
+app.include_router(organization_router)
 
 @app.get("/health")
 async def health():

@@ -8,8 +8,8 @@ from app.modules.organization.schemas.requests import CreateOrganizationRequest
 
 from app.modules.organization.infrastructure import OrganizationRepository
 
-from app.modules.identity.domain.enumerations import UserRole
 from app.modules.identity.usecases import UserUseCase
+from app.modules.identity.domain.enumerations import UserRole
 from app.modules.identity.schemas.requests import CreateUserRequest
 
 class OrganizationUseCase:

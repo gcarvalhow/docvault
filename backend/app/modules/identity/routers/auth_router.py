@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import APIRouter, Depends, Response
 
 from app.config import settings
-from app.database import get_db
+from app.dependencies import get_db
 from app.modules.identity.usecases import AuthUseCase
 from app.modules.identity.schemas.requests import LoginRequest
 from app.modules.identity.schemas.responses import TokenResponse
