@@ -1,5 +1,5 @@
 from uuid import UUID
-from pydantic import BaseModel, EmailStr, model_validator
+from pydantic import BaseModel, EmailStr, Field, model_validator
 
 from app.core.shared.validators import NonEmptyStr
 from app.modules.identity.domain.enumerations import UserRole
@@ -15,5 +15,9 @@ class CreateUserRequest(BaseModel):
     def passwords_match(self):
         if self.password != self.confirm_password:
             raise ValueError("passwords do not match")
-            
+
         return self
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=1)
