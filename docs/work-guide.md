@@ -14,6 +14,8 @@ Toda spec de desenvolvimento (documento de funcionalidades de cada desenvolvedor
 
 Não invente nome de branch, commit ou PR — use exatamente o que está definido na sua spec.
 
+A divisão de áreas/módulos entre os integrantes está em [`roles.md`](roles.md) — confira qual é a sua spec antes de começar.
+
 ---
 
 ## 1. Criar a branch de trabalho

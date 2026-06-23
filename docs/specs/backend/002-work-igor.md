@@ -1,4 +1,4 @@
-# Funcionalidades - Mandas
+# Funcionalidades - Igor Seberino
 
 ## 0. Git
 
@@ -11,7 +11,7 @@ Use exatamente esses valores ao criar a branch, commitar e abrir o PR. Ver `work
 ---
 
 ## 1. Objetivo
-Este documento define o escopo de implementacao do desenvolvedor Mandas na fase inicial do projeto.
+Este documento define o escopo de implementacao do desenvolvedor Igor Seberino na fase inicial do projeto.
 
 Tema desta entrega:
 - Autenticacao via login (email/senha), com emissao de access token (JWT) e refresh token.
@@ -310,6 +310,6 @@ A tarefa sera considerada pronta quando:
 ---
 
 ## 9. Observacoes para o time
-- Este documento define apenas o escopo do Mandas.
+- Este documento define apenas o escopo do Igor Seberino.
 - Os demais desenvolvedores terao documentos proprios em `docs/`.
 - Alteracoes de escopo devem ser aprovadas e registradas neste arquivo.

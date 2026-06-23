@@ -191,12 +191,16 @@ docvault/
 
 ## Integrantes do grupo
 
-| Nome                     | GitHub                                            |
-| ------------------------ | ------------------------------------------------- |
-| Igor Thiago Seberino     | [@igorSeberino](https://github.com/igorSeberino)  |
-| Adrian Cesar Gonçalves   | [@adrian-cesar](https://github.com/adrian-cesar)  |
-| Renato Colin Neto        | [@RenatoColin](https://github.com/RenatoColin)    |
-| Gabriel da Silva Carvalho | [@gabrielcarvallho](https://github.com/gabrielcarvallho) |
+Cada integrante é dono de uma área/módulo e trabalha em sua própria branch. A divisão
+completa de papéis está em [`docs/roles.md`](docs/roles.md); o escopo detalhado de cada
+um vive em [`docs/specs/backend/`](docs/specs/backend/).
+
+| Nome                      | GitHub                                                   | Área / Papel                                  |
+| ------------------------- | -------------------------------------------------------- | --------------------------------------------- |
+| Renato Colin Neto         | [@RenatoColin](https://github.com/RenatoColin)           | Primeiro acesso / Organização                 |
+| Igor Thiago Seberino      | [@igorSeberino](https://github.com/igorSeberino)         | Autenticação / Identity (login + JWT)         |
+| Adrian Cesar Gonçalves    | [@adrian-cesar](https://github.com/adrian-cesar)         | Sessão / Gestão de tokens (refresh, logout)   |
+| Gabriel da Silva Carvalho | [@gabrielcarvallho](https://github.com/gabrielcarvallho) | Documentos (envio + aprovação) · revisor      |
 
 ---
 
