@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, timezone
-
+from uuid import UUID
+from jose import JWTError
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -17,6 +18,39 @@ class AuthUseCase:
 
         if not user or not user.is_active or not PasswordService.verify(password, user.password_hash):
             raise HTTPException(status_code=401, detail="Invalid credentials")
+
+        return await self._issue_tokens(user)
+    
+    async def logout(self, user: User) -> None:
+        user.logout()
+        await self._users.save(user)
+
+    async def refresh(self, token: str) -> tuple[str, str]:
+        try:
+            payload = JwtTokenService.decode_token(token)
+        except JWTError:
+            raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+        if payload.get("type") != "refresh":
+            raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+        user_id = payload.get("sub")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+        user = await self._users.get_by_id(UUID(user_id))
+
+        if not user or not user.is_active:
+            raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+        token_hash = JwtTokenService.hash_token(token)
+        stored = next((t for t in user.refresh_tokens if t.token_hash == token_hash), None)
+
+        if not stored or not stored.is_valid():
+            raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+        user.revoke_refresh_token(stored.id)
+        user.regenerate_stamp()
 
         return await self._issue_tokens(user)
 
