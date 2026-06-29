@@ -2,21 +2,45 @@ name: docvault-dev
 
 services:
   postgres:
-      image: postgres:latest
-      container_name: docvault-dev
-      restart: on-failure
-      environment:
-        POSTGRES_USER: docvault
-        POSTGRES_PASSWORD: docvault
-        POSTGRES_DB: docvault
-      ports:
-        - "5432:5432"
-      volumes:
-        - pg_data:/var/lib/postgresql
-      deploy:
-        resources:
-          limits:
-            memory: 512M
+    image: postgres:15
+    container_name: docvault-postgres-dev
+    restart: on-failure
+    environment:
+      POSTGRES_USER: docvault
+      POSTGRES_PASSWORD: docvault
+      POSTGRES_DB: docvault
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docvault -d docvault"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  api:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: docvault-api-dev
+    restart: on-failure
+    env_file:
+      - ../.env.local
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
 volumes:
   pg_data:

@@ -1,0 +1,13 @@
+import enum
+
+class AuditAction(str, enum.Enum):
+    LOGIN_SUCCESS     = "LOGIN_SUCCESS"
+    LOGIN_FAILED      = "LOGIN_FAILED"
+    LOGOUT            = "LOGOUT"
+    DOC_CREATED       = "DOC_CREATED"
+    DOC_EDITED        = "DOC_EDITED"
+    DOC_STATUS_CHANGED = "DOC_STATUS_CHANGED"
+    DOC_DELETED       = "DOC_DELETED"
+    USER_CREATED      = "USER_CREATED"
+    USER_DEACTIVATED  = "USER_DEACTIVATED"
+    ACCESS_DENIED     = "ACCESS_DENIED"
