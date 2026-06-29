@@ -77,9 +77,13 @@ function LoginForm() {
 
   return (
     <div className="flex flex-1 items-center justify-center px-4">
-      <div className="w-full max-w-sm rounded-lg border border-slate-200 bg-white p-8 shadow-sm">
-        <h1 className="text-xl font-semibold text-slate-900">Entrar no DocVault</h1>
-        <p className="mt-1 text-sm text-slate-500">Acesse sua conta para continuar.</p>
+      <div className="w-full max-w-sm rounded-xl border border-rim bg-card p-8 shadow-2xl">
+        <div className="mb-6">
+          <span className="text-2xl font-bold tracking-tight text-brand">DocVault</span>
+        </div>
+
+        <h1 className="text-xl font-semibold text-slate-100">Entrar na sua conta</h1>
+        <p className="mt-1 text-sm text-slate-400">Acesse sua organização para continuar.</p>
 
         {successMessage && (
           <div className="mt-4">
@@ -119,7 +123,7 @@ function LoginForm() {
 
         <p className="mt-6 text-center text-sm text-slate-500">
           Ainda não tem uma organização?{' '}
-          <Link href="/register" className="font-medium text-slate-900 hover:underline">
+          <Link href="/register" className="font-medium text-brand hover:text-brand-muted transition-colors">
             Criar organização
           </Link>
         </p>

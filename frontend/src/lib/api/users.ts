@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/api/client'
-import type { User } from '@/lib/types/identity'
+import type { InviteUserRequest, User } from '@/lib/types/identity'
 
 export async function getUsers(includeInactive = false): Promise<User[]> {
   const { data } = await apiClient.get<User[]>('/identity/users', {
@@ -15,4 +15,9 @@ export async function getUser(id: string): Promise<User> {
 
 export async function deleteUser(id: string): Promise<void> {
   await apiClient.delete(`/identity/users/${id}`)
+}
+
+export async function inviteUser(body: InviteUserRequest): Promise<{ id: string }> {
+  const { data } = await apiClient.post<{ id: string }>('/identity/users', body)
+  return data
 }

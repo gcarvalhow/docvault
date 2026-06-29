@@ -69,7 +69,7 @@ export default function NewDocumentPage() {
 
   return (
     <div className="max-w-xl">
-      <h1 className="text-2xl font-semibold text-slate-900">Novo documento</h1>
+      <h1 className="text-2xl font-semibold text-slate-100">Novo documento</h1>
 
       {formError && (
         <div className="mt-4">

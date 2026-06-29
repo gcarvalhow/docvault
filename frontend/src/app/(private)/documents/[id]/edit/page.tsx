@@ -71,7 +71,7 @@ export default function EditDocumentPage({
   }
 
   if (!document) {
-    return <p className="text-sm text-slate-500">Documento não encontrado.</p>
+    return <p className="text-sm text-slate-400">Documento não encontrado.</p>
   }
 
   if (!canEditDocument(currentUser, document)) {
@@ -99,7 +99,7 @@ export default function EditDocumentPage({
 
   return (
     <div className="max-w-xl">
-      <h1 className="text-2xl font-semibold text-slate-900">Editar documento</h1>
+      <h1 className="text-2xl font-semibold text-slate-100">Editar documento</h1>
 
       {formError && (
         <div className="mt-4">

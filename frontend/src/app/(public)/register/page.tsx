@@ -79,9 +79,13 @@ export default function RegisterPage() {
 
   return (
     <div className="flex flex-1 items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-sm">
-        <h1 className="text-xl font-semibold text-slate-900">Criar organização</h1>
-        <p className="mt-1 text-sm text-slate-500">
+      <div className="w-full max-w-md rounded-xl border border-rim bg-card p-8 shadow-2xl">
+        <div className="mb-6">
+          <span className="text-2xl font-bold tracking-tight text-brand">DocVault</span>
+        </div>
+
+        <h1 className="text-xl font-semibold text-slate-100">Criar organização</h1>
+        <p className="mt-1 text-sm text-slate-400">
           Configure sua organização e a conta de administrador.
         </p>
 
@@ -93,7 +97,7 @@ export default function RegisterPage() {
 
         <form className="mt-6 flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
           <fieldset className="flex flex-col gap-4">
-            <legend className="text-sm font-semibold text-slate-800">Sua organização</legend>
+            <legend className="text-sm font-semibold text-slate-300">Sua organização</legend>
             <Input
               id="organization.name"
               label="Nome da organização"
@@ -103,7 +107,7 @@ export default function RegisterPage() {
           </fieldset>
 
           <fieldset className="flex flex-col gap-4">
-            <legend className="text-sm font-semibold text-slate-800">
+            <legend className="text-sm font-semibold text-slate-300">
               Sua conta de administrador
             </legend>
             <Input
@@ -139,7 +143,7 @@ export default function RegisterPage() {
 
         <p className="mt-6 text-center text-sm text-slate-500">
           Já tem uma conta?{' '}
-          <Link href="/login" className="font-medium text-slate-900 hover:underline">
+          <Link href="/login" className="font-medium text-brand hover:text-brand-muted transition-colors">
             Entrar
           </Link>
         </p>

@@ -17,3 +17,10 @@ export interface LoginRequest {
   email: string
   password: string
 }
+
+export interface InviteUserRequest {
+  email: string
+  role: UserRole
+  password: string
+  confirm_password: string
+}

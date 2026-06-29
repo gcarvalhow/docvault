@@ -19,18 +19,21 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">
+        <h1 className="text-2xl font-semibold text-slate-100">
           Olá, {currentUser?.email}
         </h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-slate-400">
           Papel: {currentUser ? ROLE_LABELS[currentUser.role] : '—'}
         </p>
       </div>
 
       <section>
         <div className="flex items-center justify-between">
-          <h2 className="text-base font-semibold text-slate-900">Resumo de documentos</h2>
-          <Link href="/documents" className="text-sm font-medium text-slate-700 hover:underline">
+          <h2 className="text-base font-semibold text-slate-200">Resumo de documentos</h2>
+          <Link
+            href="/documents"
+            className="text-sm font-medium text-brand transition-colors hover:text-brand-muted"
+          >
             Ver todos
           </Link>
         </div>
@@ -44,10 +47,10 @@ export default function DashboardPage() {
             {Object.entries(STATUS_CONFIG).map(([status, config]) => (
               <div
                 key={status}
-                className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
+                className="rounded-lg border border-rim bg-card p-5 shadow-sm transition-colors hover:border-brand/30"
               >
                 <Badge color={config.color}>{config.label}</Badge>
-                <p className="mt-3 text-2xl font-semibold text-slate-900">
+                <p className="mt-4 text-3xl font-bold text-slate-100">
                   {summary[status] ?? 0}
                 </p>
               </div>

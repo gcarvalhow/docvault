@@ -1,9 +1,9 @@
 type BannerTone = 'info' | 'error' | 'success'
 
 const TONE_CLASSES: Record<BannerTone, string> = {
-  info: 'bg-blue-50 text-blue-800 border-blue-200',
-  error: 'bg-red-50 text-red-800 border-red-200',
-  success: 'bg-green-50 text-green-800 border-green-200',
+  info: 'bg-blue-950/60 text-blue-300 border-blue-800/60',
+  error: 'bg-red-950/60 text-red-300 border-red-800/60',
+  success: 'bg-emerald-950/60 text-emerald-300 border-emerald-800/60',
 }
 
 export function Banner({

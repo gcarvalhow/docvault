@@ -58,7 +58,7 @@ export default function DocumentDetailPage({
   }
 
   if (!document) {
-    return <p className="text-sm text-slate-500">Documento não encontrado.</p>
+    return <p className="text-sm text-slate-400">Documento não encontrado.</p>
   }
 
   const statusOptions = availableStatusTargets(currentUser).map((status) => ({
@@ -93,8 +93,8 @@ export default function DocumentDetailPage({
     <div className="max-w-2xl">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">{document.title}</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <h1 className="text-2xl font-semibold text-slate-100">{document.title}</h1>
+          <p className="mt-1 text-sm text-slate-400">
             {CATEGORY_LABELS[document.category]} · Criado em {formatDateTime(document.created_at)}
           </p>
         </div>
@@ -103,32 +103,32 @@ export default function DocumentDetailPage({
         </Badge>
       </div>
 
-      <dl className="mt-6 grid grid-cols-1 gap-4 rounded-lg border border-slate-200 bg-white p-6 sm:grid-cols-2">
+      <dl className="mt-6 grid grid-cols-1 gap-4 rounded-lg border border-rim bg-card p-6 sm:grid-cols-2">
         <div>
-          <dt className="text-xs font-medium uppercase text-slate-400">Solicitante</dt>
-          <dd className="mt-1 text-sm text-slate-900">{owner?.email ?? document.owner_id}</dd>
+          <dt className="text-xs font-medium uppercase tracking-wider text-slate-500">Solicitante</dt>
+          <dd className="mt-1 text-sm text-slate-100">{owner?.email ?? document.owner_id}</dd>
         </div>
         <div>
-          <dt className="text-xs font-medium uppercase text-slate-400">Analista</dt>
-          <dd className="mt-1 text-sm text-slate-900">
+          <dt className="text-xs font-medium uppercase tracking-wider text-slate-500">Analista</dt>
+          <dd className="mt-1 text-sm text-slate-100">
             {document.analyst_id ? analyst?.email ?? '—' : '—'}
           </dd>
         </div>
         <div className="sm:col-span-2">
-          <dt className="text-xs font-medium uppercase text-slate-400">Descrição</dt>
-          <dd className="mt-1 whitespace-pre-wrap text-sm text-slate-900">
+          <dt className="text-xs font-medium uppercase tracking-wider text-slate-500">Descrição</dt>
+          <dd className="mt-1 whitespace-pre-wrap text-sm text-slate-100">
             {document.description ?? '—'}
           </dd>
         </div>
         <div className="sm:col-span-2">
-          <dt className="text-xs font-medium uppercase text-slate-400">Comentário</dt>
-          <dd className="mt-1 whitespace-pre-wrap text-sm text-slate-900">
+          <dt className="text-xs font-medium uppercase tracking-wider text-slate-500">Comentário</dt>
+          <dd className="mt-1 whitespace-pre-wrap text-sm text-slate-100">
             {document.comment ?? '—'}
           </dd>
         </div>
         <div>
-          <dt className="text-xs font-medium uppercase text-slate-400">Atualizado em</dt>
-          <dd className="mt-1 text-sm text-slate-900">{formatDateTime(document.updated_at)}</dd>
+          <dt className="text-xs font-medium uppercase tracking-wider text-slate-500">Atualizado em</dt>
+          <dd className="mt-1 text-sm text-slate-100">{formatDateTime(document.updated_at)}</dd>
         </div>
       </dl>
 
@@ -146,8 +146,8 @@ export default function DocumentDetailPage({
       </div>
 
       {canChangeStatus(currentUser) && (
-        <div className="mt-8 rounded-lg border border-slate-200 bg-white p-6">
-          <h2 className="text-base font-semibold text-slate-900">Alterar status</h2>
+        <div className="mt-8 rounded-lg border border-rim bg-card p-6">
+          <h2 className="text-base font-semibold text-slate-100">Alterar status</h2>
 
           {statusError && (
             <div className="mt-3">

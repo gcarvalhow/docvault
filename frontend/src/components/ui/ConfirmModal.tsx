@@ -27,11 +27,11 @@ export function ConfirmModal({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm"
     >
-      <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
-        <h2 className="text-base font-semibold text-slate-900">{title}</h2>
-        <p className="mt-2 text-sm text-slate-600">{description}</p>
+      <div className="w-full max-w-sm rounded-lg border border-rim bg-card p-6 shadow-2xl">
+        <h2 className="text-base font-semibold text-slate-100">{title}</h2>
+        <p className="mt-2 text-sm text-slate-400">{description}</p>
         <div className="mt-6 flex justify-end gap-2">
           <Button variant="secondary" onClick={onCancel} disabled={isLoading}>
             Cancelar
