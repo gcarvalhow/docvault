@@ -13,7 +13,9 @@ from app.modules.identity.domain.policies import (
     can_edit_document,
     can_delete_document,
     can_change_document_status,
+    can_assign_analyst,
 )
+from app.modules.identity.infrastructure.repositories import UserRepository
 
 from app.modules.documents.domain.aggregates import Document
 from app.modules.documents.domain.enumerations import DocumentStatus
@@ -22,6 +24,7 @@ from app.modules.documents.application.schemas.requests import (
     CreateDocumentRequest,
     EditDocumentRequest,
     ChangeStatusRequest,
+    AssignAnalystRequest,
 )
 
 from app.modules.documents.application.schemas.responses import DocumentResponse
@@ -130,6 +133,36 @@ class DocumentUseCase:
             target_type="document",
             target_id=document.id,
             detail=f"status={request.status.value}",
+        )
+
+    async def assign_analyst(self, user: User, document_id: UUID, request: AssignAnalystRequest) -> None:
+        if not can_assign_analyst(user.role):
+            raise HTTPException(status_code=403, detail="Insufficient permissions")
+
+        document = await self._repository.get_active_by_id(document_id)
+        if not document:
+            raise HTTPException(status_code=404, detail="Document not found")
+
+        if request.analyst_id is not None:
+            user_repo = UserRepository(self._session)
+            analyst = await user_repo.get_by_id(request.analyst_id)
+            if not analyst or not analyst.is_active:
+                raise HTTPException(status_code=404, detail="Analyst not found")
+            if analyst.role != UserRole.ANALYST:
+                raise HTTPException(status_code=400, detail="User is not an analyst")
+            if analyst.organization_id != user.organization_id:
+                raise HTTPException(status_code=400, detail="Analyst is not in the same organization")
+
+        document.assign_analyst(request.analyst_id)
+
+        await AuditService.log(
+            self._session,
+            user_id=user.id,
+            user_email=user.email,
+            action=AuditAction.DOC_ANALYST_ASSIGNED,
+            target_type="document",
+            target_id=document.id,
+            detail=f"analyst_id={request.analyst_id}",
         )
 
     async def delete(self, user: User, document_id: UUID) -> None:

@@ -38,3 +38,7 @@ export interface ChangeStatusRequest {
   analyst_id: string | null
   comment: string | null
 }
+
+export interface AssignAnalystRequest {
+  analyst_id: string | null
+}

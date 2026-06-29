@@ -35,6 +35,10 @@ export function availableStatusTargets(user: User): DocumentStatus[] {
   return []
 }
 
+export function canAssignAnalyst(user: User): boolean {
+  return user.role === 'admin'
+}
+
 export function documentsPageTitle(user: User): string {
   if (user.role === 'admin') return 'Todos os documentos'
   if (user.role === 'analista') return 'Fila de revisão'

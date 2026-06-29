@@ -18,10 +18,66 @@ body {
   font-family: var(--font-sans, system-ui, sans-serif);
 }
 
+/* Force all native form elements to use the same font */
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
 select {
   color-scheme: dark;
 }
 
+/* ── Light mode ─────────────────────────────────────────────── */
+[data-theme=light] {
+  --color-canvas: #f1f5f9;
+  --color-panel: #e4edf8;
+  --color-card: #ffffff;
+  --color-elevated: #eef4fc;
+  --color-rim: #c5d4e8;
+  --color-brand: #059669;
+  --color-brand-muted: #047857;
+
+  color: #0f172a;
+
+  /*
+   * Invert the Tailwind slate scale so components that use
+   * text-slate-100 (bright on dark) become dark on light,
+   * and muted shades stay readable.
+   */
+  --color-slate-50:  oklch(0.208 0.042 265.755);
+  --color-slate-100: oklch(0.208 0.042 265.755);
+  --color-slate-200: oklch(0.279 0.041 260.031);
+  --color-slate-300: oklch(0.372 0.044 257.287);
+  --color-slate-400: oklch(0.446 0.043 257.281);
+  --color-slate-500: oklch(0.554 0.046 257.417);
+  --color-slate-600: oklch(0.704 0.040 256.788);
+  --color-slate-700: oklch(0.869 0.022 252.894);
+  --color-slate-800: oklch(0.929 0.013 255.508);
+  --color-slate-900: oklch(0.968 0.007 247.896);
+}
+
+[data-theme=light] select {
+  color-scheme: light;
+}
+
+/* Banner tones — invert for readability on light background */
+[data-theme=light] .bg-blue-950\/60    { background-color: rgb(239 246 255 / 0.9); }
+[data-theme=light] .text-blue-300      { color: #1d4ed8; }
+[data-theme=light] .border-blue-800\/60 { border-color: rgb(147 197 253 / 0.7); }
+
+[data-theme=light] .bg-red-950\/60    { background-color: rgb(254 242 242 / 0.9); }
+[data-theme=light] .text-red-300      { color: #b91c1c; }
+[data-theme=light] .border-red-800\/60 { border-color: rgb(252 165 165 / 0.7); }
+
+[data-theme=light] .bg-emerald-950\/60    { background-color: rgb(236 253 245 / 0.9); }
+[data-theme=light] .text-emerald-300      { color: #065f46; }
+[data-theme=light] .border-emerald-800\/60 { border-color: rgb(110 231 183 / 0.7); }
+
+/* ── Animations ─────────────────────────────────────────────── */
 @keyframes dialog-in {
   from {
     opacity: 0;

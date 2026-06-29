@@ -4,23 +4,24 @@ import { use, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCurrentUser } from '@/lib/hooks/useCurrentUser'
-import { useChangeDocumentStatus, useDeleteDocument, useDocument } from '@/lib/hooks/useDocuments'
-import { useUser } from '@/lib/hooks/useUsers'
+import { useAssignAnalyst, useChangeDocumentStatus, useDeleteDocument, useDocument } from '@/lib/hooks/useDocuments'
+import { useUser, useUsers } from '@/lib/hooks/useUsers'
 import { CATEGORY_LABELS, STATUS_CONFIG, formatDateTime } from '@/lib/utils/formatters'
 import {
   availableStatusTargets,
+  canAssignAnalyst,
   canChangeStatus,
   canDeleteDocument,
   canEditDocument,
 } from '@/lib/utils/permissions'
 import { parseApiError } from '@/lib/utils/errors'
 import { Badge } from '@/components/ui/Badge'
-import { Button } from '@/components/ui/Button'
-import { Select } from '@/components/ui/Select'
-import { TextArea } from '@/components/ui/TextArea'
-import { ConfirmModal } from '@/components/ui/ConfirmModal'
-import { Spinner } from '@/components/ui/Spinner'
 import { Banner } from '@/components/ui/Banner'
+import { Button } from '@/components/ui/Button'
+import { ConfirmModal } from '@/components/ui/ConfirmModal'
+import { Select } from '@/components/ui/Select'
+import { Spinner } from '@/components/ui/Spinner'
+import { TextArea } from '@/components/ui/TextArea'
 import type { DocumentStatus } from '@/lib/types/documents'
 
 const STATUS_SELECT_LABELS: Record<DocumentStatus, string> = {
@@ -41,12 +42,19 @@ export default function DocumentDetailPage({
   const { data: document, isLoading } = useDocument(id)
   const { data: analyst } = useUser(document?.analyst_id)
   const { data: owner } = useUser(document?.owner_id)
+  const { data: allUsers } = useUsers(false)
   const changeStatus = useChangeDocumentStatus(id)
+  const assignAnalystMutation = useAssignAnalyst(id)
   const deleteDocument = useDeleteDocument()
 
   const [selectedStatus, setSelectedStatus] = useState<DocumentStatus | ''>('')
   const [comment, setComment] = useState('')
   const [statusError, setStatusError] = useState<string | null>(null)
+
+  const [selectedAnalystId, setSelectedAnalystId] = useState<string>('')
+  const [analystError, setAnalystError] = useState<string | null>(null)
+  const [analystSuccess, setAnalystSuccess] = useState(false)
+
   const [confirmDelete, setConfirmDelete] = useState(false)
 
   if (isLoading || !currentUser) {
@@ -66,6 +74,13 @@ export default function DocumentDetailPage({
     label: STATUS_SELECT_LABELS[status],
   }))
 
+  const analystOptions = [
+    { value: '', label: 'Nenhum (remover atribuição)' },
+    ...(allUsers ?? [])
+      .filter((u) => u.role === 'analista' && u.is_active)
+      .map((u) => ({ value: u.id, label: u.email })),
+  ]
+
   async function handleStatusSubmit() {
     if (!selectedStatus || !currentUser) return
     setStatusError(null)
@@ -80,6 +95,20 @@ export default function DocumentDetailPage({
     } catch (error) {
       const parsed = parseApiError(error)
       setStatusError(typeof parsed === 'string' ? parsed : 'Erro ao atualizar status')
+    }
+  }
+
+  async function handleAssignAnalyst() {
+    setAnalystError(null)
+    setAnalystSuccess(false)
+    try {
+      await assignAnalystMutation.mutateAsync({
+        analyst_id: selectedAnalystId || null,
+      })
+      setAnalystSuccess(true)
+    } catch (error) {
+      const parsed = parseApiError(error)
+      setAnalystError(typeof parsed === 'string' ? parsed : 'Erro ao atribuir analista')
     }
   }
 
@@ -144,6 +173,44 @@ export default function DocumentDetailPage({
           </Button>
         )}
       </div>
+
+      {canAssignAnalyst(currentUser) && (
+        <div className="mt-8 rounded-lg border border-rim bg-card p-6">
+          <h2 className="text-base font-semibold text-slate-100">Atribuir analista</h2>
+
+          {analystError && (
+            <div className="mt-3">
+              <Banner tone="error">{analystError}</Banner>
+            </div>
+          )}
+          {analystSuccess && (
+            <div className="mt-3">
+              <Banner tone="success">Analista atualizado com sucesso.</Banner>
+            </div>
+          )}
+
+          <div className="mt-4 flex flex-col gap-4">
+            <Select
+              id="analyst"
+              label="Analista responsável"
+              options={analystOptions}
+              value={selectedAnalystId}
+              onChange={(e) => {
+                setSelectedAnalystId(e.target.value)
+                setAnalystSuccess(false)
+              }}
+            />
+            <div>
+              <Button
+                onClick={handleAssignAnalyst}
+                isLoading={assignAnalystMutation.isPending}
+              >
+                Confirmar atribuição
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {canChangeStatus(currentUser) && (
         <div className="mt-8 rounded-lg border border-rim bg-card p-6">

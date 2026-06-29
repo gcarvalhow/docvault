@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { UserRole } from '@/lib/types/identity'
+import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 interface NavLinkConfig {
   href: string
@@ -112,6 +113,7 @@ export function Nav({ role, organizationName, userEmail, onLogout }: NavProps) {
           </div>
           <p className="min-w-0 flex-1 truncate text-xs text-slate-400">{userEmail}</p>
         </div>
+        <ThemeToggle />
         <button
           onClick={onLogout}
           className="mt-1 flex w-full items-center gap-2 rounded-lg px-2 py-2 text-xs font-medium text-slate-500 transition-colors hover:bg-elevated hover:text-red-400"

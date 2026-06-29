@@ -59,3 +59,6 @@ class Document(Model):
         self.status = new_status
         self.analyst_id = analyst_id
         self.comment = comment
+
+    def assign_analyst(self, analyst_id: UUID | None) -> None:
+        self.analyst_id = analyst_id

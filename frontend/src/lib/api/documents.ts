@@ -1,5 +1,6 @@
 import { apiClient } from '@/lib/api/client'
 import type {
+  AssignAnalystRequest,
   ChangeStatusRequest,
   CreateDocumentRequest,
   Document,
@@ -31,6 +32,10 @@ export async function changeDocumentStatus(
   body: ChangeStatusRequest
 ): Promise<void> {
   await apiClient.patch(`/documents/${id}/status`, body)
+}
+
+export async function assignAnalyst(id: string, body: AssignAnalystRequest): Promise<void> {
+  await apiClient.patch(`/documents/${id}/analyst`, body)
 }
 
 export async function deleteDocument(id: string): Promise<void> {

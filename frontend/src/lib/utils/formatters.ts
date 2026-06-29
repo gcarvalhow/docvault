@@ -33,6 +33,7 @@ export const AUDIT_ACTION_LABELS: Record<string, string> = {
   DOC_EDITED: 'Documento editado',
   DOC_STATUS_CHANGED: 'Status do documento alterado',
   DOC_DELETED: 'Documento excluído',
+  DOC_ANALYST_ASSIGNED: 'Analista atribuído ao documento',
   ACCESS_DENIED: 'Acesso negado',
 }
 

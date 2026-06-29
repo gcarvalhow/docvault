@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
+  assignAnalyst,
   changeDocumentStatus,
   createDocument,
   deleteDocument,
@@ -7,7 +8,7 @@ import {
   getDocument,
   getDocuments,
 } from '@/lib/api/documents'
-import type { ChangeStatusRequest, CreateDocumentRequest, Document, EditDocumentRequest } from '@/lib/types/documents'
+import type { AssignAnalystRequest, ChangeStatusRequest, CreateDocumentRequest, Document, EditDocumentRequest } from '@/lib/types/documents'
 
 const documentsKey = ['documents'] as const
 const documentKey = (id: string) => ['documents', id] as const
@@ -52,6 +53,16 @@ export function useChangeDocumentStatus(id: string) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: documentKey(id) })
       queryClient.invalidateQueries({ queryKey: documentsKey })
+    },
+  })
+}
+
+export function useAssignAnalyst(id: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (body: AssignAnalystRequest) => assignAnalyst(id, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: documentKey(id) })
     },
   })
 }

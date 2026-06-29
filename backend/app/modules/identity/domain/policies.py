@@ -55,3 +55,6 @@ def can_delete_document(role: UserRole | str, *, is_owner: bool, status: str) ->
 
 def can_change_document_status(role: UserRole | str) -> bool:
     return has_any_role(role, UserRole.ADMIN, UserRole.ANALYST)
+
+def can_assign_analyst(role: UserRole | str) -> bool:
+    return is_admin(role)

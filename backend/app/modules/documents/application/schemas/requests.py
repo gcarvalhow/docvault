@@ -21,3 +21,6 @@ class ChangeStatusRequest(BaseModel):
     status: DocumentStatus
     analyst_id: UUID | None = None
     comment: str | None = None
+
+class AssignAnalystRequest(BaseModel):
+    analyst_id: UUID | None = None

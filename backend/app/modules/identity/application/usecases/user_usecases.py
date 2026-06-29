@@ -57,7 +57,7 @@ class UserUseCase:
         return UserResponse.model_validate(user)
 
     async def list_users(self, requesting_user: User, include_inactive: bool = False) -> list[UserResponse]:
-        users = requesting_user.organization.users
+        users = await self._repository.list_by_organization(requesting_user.organization_id)
         if not include_inactive:
             users = [u for u in users if u.is_active]
         return [UserResponse.model_validate(u) for u in users]

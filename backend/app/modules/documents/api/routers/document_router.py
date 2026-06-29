@@ -14,6 +14,7 @@ from app.modules.documents.application.schemas.requests import (
     CreateDocumentRequest,
     EditDocumentRequest,
     ChangeStatusRequest,
+    AssignAnalystRequest,
 )
 
 from app.modules.documents.application.usecases import DocumentUseCase
@@ -42,6 +43,15 @@ async def change_status(
     session: AsyncSession = Depends(get_db)
 ):
     await DocumentUseCase(session).change_status(user, document_id, body)
+
+@router.patch("/{document_id}/analyst", status_code=204)
+async def assign_analyst(
+    document_id: UUID,
+    body: AssignAnalystRequest,
+    user: User = Depends(require_role(UserRole.ADMIN)),
+    session: AsyncSession = Depends(get_db),
+):
+    await DocumentUseCase(session).assign_analyst(user, document_id, body)
 
 @router.delete("/{document_id}", status_code=204)
 async def delete(document_id: UUID, user: User = Depends(get_current_user), session: AsyncSession = Depends(get_db)):
